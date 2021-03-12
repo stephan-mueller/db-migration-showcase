@@ -1,0 +1,1 @@
+INSERT INTO quarkus(id, name) VALUES (1, 'QUARKED');

@@ -9,4 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <modules>
+        <module>flyway-showcase</module>
+    </modules>
 </project>

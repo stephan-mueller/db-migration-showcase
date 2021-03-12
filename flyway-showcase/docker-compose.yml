@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+
+  database:
+    image: postgres:12-alpine
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_DB: db-migration
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  application:
+    image: flyway-showcase:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    environment:
+      POSTGRES_URL: jdbc:postgresql://database:5432/db-migration
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
