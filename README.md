@@ -1,5 +1,6 @@
 # DB-Migration Showcase
 
+[![GitHub Workflow](https://github.com/stephan-mueller/db-migration-showcase/actions/workflows/maven.yml/badge.svg)](https://github.com/stephan-mueller/db-migration-showcase/actions)
 [![GitHub last commit](https://img.shields.io/github/last-commit/stephan-mueller/db-migration-showcase)](https://github.com/stephan-mueller/db-migration-showcase/commits)
 [![GitHub](https://img.shields.io/github/license/stephan-mueller/db-migration-showcase)](https://github.com/stephan-mueller/db-migration-showcase/blob/master/LICENSE)
 
