@@ -11,5 +11,6 @@
 
     <modules>
         <module>flyway-showcase</module>
+        <module>liquibase-showcase</module>
     </modules>
 </project>

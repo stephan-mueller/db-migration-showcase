@@ -10,10 +10,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
-#  flyway:
-#    image: flyway/flyway
-#      command: -url=jdbc:postgres://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
-#      volumes:
-#        - .:/flyway/sql
-#      depends_on:
-#        - database
+  application:
+    image: liquibase-showcase:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    environment:
+      POSTGRES_URL: jdbc:postgresql://database:5432/db-migration
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
