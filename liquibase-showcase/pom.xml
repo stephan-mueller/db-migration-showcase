@@ -16,6 +16,11 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
+        <quarkus.container-image.build>true</quarkus.container-image.build>
+        <quarkus.container-image.group>db-migration-showcase</quarkus.container-image.group>
+        <quarkus.container-image.name>${project.artifactId}</quarkus.container-image.name>
+        <quarkus.container-image.tag>latest</quarkus.container-image.tag>
+
         <version.quarkus>1.11.0.Final</version.quarkus>
     </properties>
 
@@ -35,6 +40,10 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -60,12 +69,6 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -75,35 +78,8 @@
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${version.quarkus}</version>
-                <configuration>
-                    <uberJar>true</uberJar>
-                    <ignoredEntries>
-                        <ignoredEntry>META-INF/DEPENDENCIES.txt</ignoredEntry>
-                    </ignoredEntries>
-                </configuration>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.13</version>
-                <configuration>
-                    <dockerfile>src/main/docker/Dockerfile.jvm</dockerfile>
-                    <repository>${project.build.finalName}</repository>
-                    <buildArgs>
-                        <JAR_FILE>${project.build.finalName}-runner.jar</JAR_FILE>
-                    </buildArgs>
-                    <skipDockerInfo>true</skipDockerInfo>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
