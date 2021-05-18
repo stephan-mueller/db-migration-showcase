@@ -21,7 +21,7 @@
         <quarkus.container-image.name>${project.artifactId}</quarkus.container-image.name>
         <quarkus.container-image.tag>latest</quarkus.container-image.tag>
 
-        <version.quarkus>1.11.0.Final</version.quarkus>
+        <version.quarkus>1.13.0.Final</version.quarkus>
     </properties>
 
     <dependencyManagement>
