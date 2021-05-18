@@ -120,7 +120,7 @@
                     <username>postgres</username>
                     <password>postgres</password>
                     <changeLogDirectory>${project.basedir}/src/main/resources/db</changeLogDirectory>
-                    <changeLogFile>changeLog.xml</changeLogFile>
+                    <changeLogFile>db.changelog-master.xml</changeLogFile>
                 </configuration>
                 <dependencies>
                     <dependency>

@@ -47,21 +47,27 @@ the [concepts](https://www.liquibase.org/get-started/core-usage).
 ### Migration scripts
 
 The showcase contains a list of changesets which are located in the directory `src/main/resources/db`. Like mentioned before does Liquibase
-support different ways to define changes. To easy comparation between Flyway and Liquibase a mix of XML and SQL changesets is used.  
+support different ways to define changes. To ease comparation between Flyway and Liquibase a mix of XML and SQL changesets is used.
 
-_changeLog.xml_
+The most common way to organize changelogs is by major releases. The _db.changelog-master.xml_ includes the changelog for the releases in 
+the correct order. Please note: Each of the included XML files needs to be in the same format as a standard XML database changelog. Futher 
+information and best practices how to keep changelogs organized can be found at [liquibase.org](https://www.liquibase.org/get-started/best-practices) 
+and in the [blog article](https://blog.codecentric.de/en/2015/01/managing-database-migrations-using-liquibase/) by Thomas Jasper.
+
+
+_db.changelog-master.xml_
 ```xml
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <include file="version/V1/db.changeLog.v1.xml" relativeToChangelogFile="true" />
-    <include file="version/V2/db.changeLog.v2.xml" relativeToChangelogFile="true" />
+    <include file="version/v1/db.changelog.v1.xml" relativeToChangelogFile="true" />
+    <include file="version/v2/db.changelog.v2.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>
 ```
 
-_db.changeLog.v1.xml_
+_db.changelog.v1.xml_
 ```xml
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
@@ -85,7 +91,7 @@ CREATE TABLE quarkus (
 );
 ```
 
-_db.changeLog.v2.xml_
+_db.changelog.v2.xml_
 ```xml
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
@@ -136,7 +142,7 @@ The use the plugin it has to be configured in the `pom.xml`.
         <username>postgres</username>
         <password>postgres</password>
         <changeLogDirectory>${project.basedir}/src/main/resources/db</changeLogDirectory>
-        <changeLogFile>changeLog.xml</changeLogFile>
+        <changeLogFile>db.changelog-master.xml</changeLogFile>
     </configuration>
     <dependencies>
         <dependency>
@@ -176,8 +182,8 @@ mvn liquibase:status
 [INFO] Starte Liquibase am 17:09:18 (Version 4.3.1 #26, kompiliert am 2021-02-12 17:41+0000)
 [INFO] Executing on Database: jdbc:postgresql://localhost:5432/db-migration
 2 change sets have not been applied to postgres@jdbc:postgresql://localhost:5432/db-migration
-     version/V1/db.changeLog.v1.xml::1::quarkus
-     version/V2/db.changeLog.v2.xml::2::quarkus
+     version/v1/db.changelog.v1.xml::1::quarkus
+     version/v2/db.changelog.v2.xml::2::quarkus
 ```
 
 If the database is not empty or you want to reset the database to a clean state use `liquibase:dropAll`.
@@ -224,9 +230,9 @@ mvn liquibase:update
 [INFO] Successfully released change log lock
 [INFO] Changelog-Protokoll erfolgreich gesperrt.
 [INFO] SQL in file V1__create_table_quarkus.sql executed
-[INFO] ChangeSet version/V1/db.changeLog.v1.xml::1::quarkus ran successfully in 16ms
+[INFO] ChangeSet version/v1/db.changelog.v1.xml::1::quarkus ran successfully in 16ms
 [INFO] SQL in file V2__insert_table_quarkus.sql executed
-[INFO] ChangeSet version/V2/db.changeLog.v2.xml::2::quarkus ran successfully in 7ms
+[INFO] ChangeSet version/v2/db.changelog.v2.xml::2::quarkus ran successfully in 7ms
 [INFO] Successfully released change log lock
 ```
 
@@ -265,7 +271,7 @@ mvn liquibase:update -Dliquibase.labels=1
 [INFO] Successfully released change log lock
 [INFO] Changelog-Protokoll erfolgreich gesperrt.
 [INFO] SQL in file V1__create_table_quarkus.sql executed
-[INFO] ChangeSet version/V1/db.changeLog.v1.xml::1::quarkus ran successfully in 15ms
+[INFO] ChangeSet version/v1/db.changelog.v1.xml::1::quarkus ran successfully in 15ms
 [INFO] Successfully released change log lock
 
 ```
@@ -283,7 +289,7 @@ After migration to version `1` was successful the result of `liquibase:status` s
 [INFO] Executing on Database: jdbc:postgresql://localhost:5432/db-migration
 [INFO] Reading from databasechangelog
 1 change sets have not been applied to postgres@jdbc:postgresql://localhost:5432/db-migration
-     version/V2/db.changeLog.v2.xml::2::quarkus
+     version/v2/db.changelog.v2.xml::2::quarkus
 
 ```
 
@@ -308,6 +314,6 @@ SELECT * FROM databasechangelog;
 
 | id | author | filename | dateexecuted | orderexecuted | exectype | md5sum | description | comments | tag | liquibase | contexts | labels | deployment\_id |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | quarkus | db/version/V1/db.changeLog.v1.xml | 2021-03-14 19:46:30.725283 | 1 | EXECUTED | 8:4516226769c0b9ce2013de0069fe8e25 | sqlFile |  | NULL | 4.2.2 | NULL | 1 | 5747590712 |
-| 2 | quarkus | db/version/V2/db.changeLog.v2.xml | 2021-03-14 19:46:30.738426 | 2 | EXECUTED | 8:78b45cad83349876aab5a5a469485567 | sqlFile |  | NULL | 4.2.2 | NULL | 2 | 5747590712 |
+| 1 | quarkus | db/version/v1/db.changelog.v1.xml | 2021-03-14 19:46:30.725283 | 1 | EXECUTED | 8:4516226769c0b9ce2013de0069fe8e25 | sqlFile |  | NULL | 4.2.2 | NULL | 1 | 5747590712 |
+| 2 | quarkus | db/version/v2/db.changelog.v2.xml | 2021-03-14 19:46:30.738426 | 2 | EXECUTED | 8:78b45cad83349876aab5a5a469485567 | sqlFile |  | NULL | 4.2.2 | NULL | 2 | 5747590712 |
 
