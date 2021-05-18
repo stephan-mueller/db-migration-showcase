@@ -53,12 +53,11 @@ _changeLog.xml_
 ```xml
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet id="1" author="quarkus" labels="1">
-        <sqlFile path="V1__create_table_quarkus.sql" relativeToChangelogFile="true" />
-    </changeSet>
+    <include file="version/V1/db.changeLog.v1.xml" relativeToChangelogFile="true" />
+    <include file="version/V2/db.changeLog.v2.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>
 ```
 
@@ -107,15 +106,12 @@ _V2__insert_table_quarkus.sql_ - inserts a single row into table `QUARKUS`
 INSERT INTO quarkus(id, name) VALUES (1, 'QUARKED');
 ```
 
-Some best practices how to keep changelogs organized can be found [here](https://www.liquibase.org/get-started/best-practices).
-
-
 ### How to run
 
 Before running the application or the `liquibase-maven-plugin` the database has to be started via `docker`:
 
 ```shell script
-docker-compose up database
+docker compose up database
 ```
 
 If everything worked you can access the database with a database client via `jdbc:postgresql://localhost:5432/db-migration`.
@@ -301,7 +297,7 @@ Docker image using Spotify's `dockerfile-maven-plugin` during the package phase.
 
 ```shell script
 mvn clean package
-docker-compose up application
+docker compose up application
 ```
 
 If the migration was successful you should see the following data in the `xxx` table.
