@@ -73,7 +73,7 @@ INSERT INTO quarkus(id, name) VALUES (1, 'QUARKED');
 Before running the application or the `flyway-maven-plugin` the database has to be started via `docker`:
 
 ```shell script
-docker-compose up database
+docker compose up database
 ```
 
 If everything worked you can access the database with a database client via `jdbc:postgresql://localhost:5432/db-migration`. 
@@ -228,7 +228,7 @@ Docker image using Spotify's `dockerfile-maven-plugin` during the package phase.
 
 ```shell script
 mvn clean package
-docker-compose up application
+docker compose up application
 ```
 
 If the migration was successful you should see the following data in the `flyway_schema_history` table.
