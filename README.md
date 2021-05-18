@@ -1,5 +1,8 @@
 # DB-Migration Showcase
 
+[![GitHub last commit](https://img.shields.io/github/last-commit/stephan-mueller/db-migration-showcase)](https://github.com/stephan-mueller/db-migration-showcase/commits)
+[![GitHub](https://img.shields.io/github/license/stephan-mueller/db-migration-showcase)](https://github.com/stephan-mueller/db-migration-showcase/blob/master/LICENSE)
+
 This is a showcase to demonstrate database migration with [Flyway](https://flywaydb.org/) and [Liquibase](https://www.liquibase.org). 
 Software requirements to run the samples are `maven`, `openjdk-8` (or any other JDK 8) and `docker`.
 
